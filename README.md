@@ -5,12 +5,35 @@
 
 A [Homebridge](https://homebridge.io) plugin for [Grizzl-E Connect](https://grizzl-e.com) EV chargers by United Chargers.
 
-Exposes each charger in your Grizzl-E Connect account as a **HomeKit outlet**:
-- **On / Off** — enable or disable charging
-- **Outlet In Use** — indicates the car is actively drawing power
-- **No Response** — shown when the charger is offline
+Each charger in your Grizzl-E Connect account is exposed as a HomeKit accessory with full charging status visibility and control — all on a single accessory detail page.
 
-This enables HomeKit automations such as automatically disabling EV charging during demand response events (e.g. Hilo / Hydro-Québec challenges).
+## HomeKit Accessory
+
+Each charger exposes the following:
+
+### Outlet (main control)
+| Feature | Description |
+|---|---|
+| **On / Off** | Enable or disable charging |
+| **Outlet In Use** | Lit when the car is actively drawing power |
+| **Fault** | Warning badge shown when the charger reports an error |
+| **No Response** | Shown when the charger is offline |
+
+### Car Plugged In
+An occupancy sensor that activates whenever a car is physically connected to the charger — regardless of whether charging is active or paused.
+
+### Connector Status Sensors
+Five individual occupancy sensors, each usable as a HomeKit automation trigger:
+
+| Sensor | Active when... |
+|---|---|
+| **Preparing** | Car is connected and the session is initializing |
+| **Charging** | Car is actively drawing power |
+| **Suspended by Charger** | The charger (EVSE) has paused the session |
+| **Suspended by Car** | The car's battery management system has paused the session |
+| **Finishing** | The charging session is winding down |
+
+These map directly to the OCPP standard connector statuses (`Preparing`, `Charging`, `SuspendedEVSE`, `SuspendedEV`, `Finishing`).
 
 ## Requirements
 
@@ -48,16 +71,26 @@ Configure via the Homebridge UI, or add to your `config.json`:
 
 ## How It Works
 
-The plugin authenticates with the Grizzl-E Connect cloud API using your account credentials. All chargers in your account are automatically discovered and exposed as HomeKit outlet accessories. The plugin polls the API on a configurable interval to keep charger state in sync.
+The plugin authenticates with the Grizzl-E Connect cloud API using your account credentials. All chargers in your account are automatically discovered. The plugin polls the API on a configurable interval and pushes state changes to HomeKit immediately as they occur.
 
-Chargers that are offline (not connected to the internet) will show **No Response** in HomeKit rather than a stale state.
+Chargers that are offline (not connected to the internet) show **No Response** in HomeKit rather than stale data.
 
 ## Automations
 
-A common use case is pairing this plugin with **[homebridge-hilo-challenge](https://github.com/justinjsp/homebridge-hilo-challenge)** to automatically disable EV charging during Hilo demand response reduction phases:
+Because each status is exposed as an individual occupancy sensor, you can build precise HomeKit automations:
 
-- **When** Hilo Reduction sensor opens → **Turn off** Grizzl-E charger(s)
-- **When** Hilo Reduction sensor closes → **Turn on** Grizzl-E charger(s)
+**Demand response (paired with [homebridge-hilo-challenge](https://github.com/justinjsp/homebridge-hilo-challenge)):**
+- **When** Hilo Reduction sensor opens → **Turn off** charger
+- **When** Hilo Reduction sensor closes → **Turn on** charger
+
+**Scheduled charging:**
+- **When** Car Plugged In activates after 11 PM → **Turn on** charger
+- **When** Car Plugged In activates before 11 PM → **Turn off** charger (charge overnight instead)
+
+**Notifications:**
+- **When** Suspended by Charger activates → send notification (unexpected pause)
+- **When** Charging activates → send notification (charging started)
+- **When** Finishing activates → send notification (charging complete)
 
 ## Issues & Support
 
