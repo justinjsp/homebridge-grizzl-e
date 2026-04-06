@@ -8,7 +8,8 @@ import {
 import { GrizzlEApi, GrizzlEStation } from './grizzlEApi';
 
 // Station/connector mode values used by the Grizzl-E Connect API
-const DISABLED_MODES = new Set(['Inactive', 'SuspendedEVSE', 'Unavailable']);
+// Modes/statuses that mean the user has disabled charging (not temporary EVSE suspensions)
+const DISABLED_MODES = new Set(['Inactive', 'Unavailable']);
 // OCPP statuses that indicate a car is physically plugged in
 const CAR_CONNECTED_STATUSES = new Set(['Preparing', 'Charging', 'SuspendedEVSE', 'SuspendedEV', 'Finishing']);
 
