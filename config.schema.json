@@ -1,0 +1,48 @@
+{
+  "pluginAlias": "GrizzlE",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "email": {
+        "title": "Grizzl-E Connect Email",
+        "type": "string",
+        "required": true,
+        "format": "email",
+        "description": "The email address you use to log in to the Grizzl-E Connect app."
+      },
+      "password": {
+        "title": "Grizzl-E Connect Password",
+        "type": "string",
+        "required": true,
+        "description": "Your Grizzl-E Connect password.",
+        "x-schema-form": {
+          "type": "password"
+        }
+      },
+      "pollInterval": {
+        "title": "Poll Interval (seconds)",
+        "type": "integer",
+        "default": 30,
+        "minimum": 10,
+        "maximum": 300,
+        "description": "How often to poll the Grizzl-E Connect API for charger status updates."
+      }
+    }
+  },
+  "form": [
+    {
+      "type": "fieldset",
+      "title": "Grizzl-E Connect Account",
+      "items": ["email", "password"]
+    },
+    {
+      "type": "fieldset",
+      "title": "Advanced",
+      "expandable": true,
+      "expanded": false,
+      "items": ["pollInterval"]
+    }
+  ]
+}
