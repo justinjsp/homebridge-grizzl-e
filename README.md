@@ -83,10 +83,6 @@ Because each status is exposed as an individual occupancy sensor, you can build 
 - **When** Hilo Reduction sensor opens → **Turn off** charger
 - **When** Hilo Reduction sensor closes → **Turn on** charger
 
-**Scheduled charging:**
-- **When** Car Plugged In activates after 11 PM → **Turn on** charger
-- **When** Car Plugged In activates before 11 PM → **Turn off** charger (charge overnight instead)
-
 **Notifications:**
 - **When** Suspended by Charger activates → send notification (unexpected pause)
 - **When** Charging activates → send notification (charging started)
