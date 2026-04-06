@@ -1,6 +1,6 @@
 {
   "name": "homebridge-grizzl-e",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Homebridge plugin for Grizzl-E Connect EV chargers — expose chargers as HomeKit outlets to enable/disable charging",
   "license": "MIT",
   "author": "Justin Prest",
