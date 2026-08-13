@@ -1,5 +1,4 @@
 import * as https from 'https';
-import * as http from 'http';
 
 const API_BASE = 'connect-api.unitedchargers.com';
 
