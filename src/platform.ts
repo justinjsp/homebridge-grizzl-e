@@ -30,8 +30,16 @@ export class GrizzlEPlatform implements DynamicPlatformPlugin {
       log,
     );
 
+    if (!config['email'] || !config['password']) {
+      this.log.error(
+        'Missing required configuration: "email" and "password". ' +
+        'The Grizzl-E platform will not start until these are set.',
+      );
+      return;
+    }
+
     this.homebridgeApi.on('didFinishLaunching', () => {
-      this.discoverDevices();
+      this.discoverDevices().catch((err) => this.log.error(`Startup failed: ${err}`));
     });
   }
 
