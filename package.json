@@ -29,6 +29,7 @@
   },
   "keywords": [
     "homebridge-plugin",
+    "supports-hap",
     "grizzl-e",
     "grizzle",
     "ev",
