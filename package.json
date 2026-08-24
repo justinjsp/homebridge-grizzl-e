@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/justinjsp/homebridge-grizzl-e.git"
+    "url": "git+https://github.com/justinjsp/homebridge-grizzl-e.git"
   },
   "bugs": {
     "url": "https://github.com/justinjsp/homebridge-grizzl-e/issues"
