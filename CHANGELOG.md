@@ -5,6 +5,12 @@ All notable changes to **homebridge-grizzl-e** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.11] - 2026-08-25
+
+### Fixed
+- Set a top-level `displayName` (`Grizzl-E`) so the Homebridge UI shows the
+  hyphenated brand name instead of the auto-prettified "Grizzl E".
+
 ## [0.1.10] - 2026-08-25
 
 ### Security
@@ -85,6 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release. Exposes Grizzl-E Connect EV chargers as HomeKit Outlet
   accessories with enable/disable charging and Outlet In Use support.
 
+[0.1.11]: https://github.com/justinjsp/homebridge-grizzl-e/releases/tag/v0.1.11
 [0.1.10]: https://github.com/justinjsp/homebridge-grizzl-e/releases/tag/v0.1.10
 [0.1.9]: https://github.com/justinjsp/homebridge-grizzl-e/releases/tag/v0.1.9
 [0.1.8]: https://github.com/justinjsp/homebridge-grizzl-e/releases/tag/v0.1.8
