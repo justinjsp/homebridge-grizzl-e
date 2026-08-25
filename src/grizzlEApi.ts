@@ -49,6 +49,17 @@ interface JwtPayload {
   exp: number;
 }
 
+/**
+ * Redacts the auth token from a login response before it is logged, so users
+ * pasting debug logs (e.g. into GitHub issues) don't expose their session token.
+ */
+function redactToken(raw: unknown): unknown {
+  if (raw && typeof raw === 'object' && 'token' in (raw as Record<string, unknown>)) {
+    return { ...(raw as Record<string, unknown>), token: '<redacted>' };
+  }
+  return raw;
+}
+
 function parseJwtExpiry(token: string): number {
   try {
     const payload = token.split('.')[1];
@@ -140,10 +151,10 @@ export class GrizzlEApi {
       emailOrPhone: this.email,
       password: this.password,
     });
-    this.log.debug(`Login raw response: ${JSON.stringify(raw)}`);
+    this.log.debug(`Login raw response: ${JSON.stringify(redactToken(raw))}`);
     const resp = raw as LoginResponse;
     if (!resp.token) {
-      throw new Error(`Login did not return a token. Response: ${JSON.stringify(raw)}`);
+      throw new Error(`Login did not return a token. Response: ${JSON.stringify(redactToken(raw))}`);
     }
     this.token = resp.token;
     this.tokenExpiry = parseJwtExpiry(resp.token);

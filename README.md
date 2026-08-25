@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/homebridge-grizzl-e)](https://www.npmjs.com/package/homebridge-grizzl-e)
 [![npm](https://img.shields.io/npm/dt/homebridge-grizzl-e)](https://www.npmjs.com/package/homebridge-grizzl-e)
+[![verified-by-homebridge](https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=flat)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
 
 A [Homebridge](https://homebridge.io) plugin for [Grizzl-E Connect](https://grizzl-e.com) EV chargers by United Chargers.
 

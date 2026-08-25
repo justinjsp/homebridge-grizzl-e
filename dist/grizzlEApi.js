@@ -44,6 +44,16 @@ const APP_HEADERS = {
     'x-app-version': 'v0.9.2 (115)',
     'x-application-name': 'Grizzl-E Connect',
 };
+/**
+ * Redacts the auth token from a login response before it is logged, so users
+ * pasting debug logs (e.g. into GitHub issues) don't expose their session token.
+ */
+function redactToken(raw) {
+    if (raw && typeof raw === 'object' && 'token' in raw) {
+        return { ...raw, token: '<redacted>' };
+    }
+    return raw;
+}
 function parseJwtExpiry(token) {
     try {
         const payload = token.split('.')[1];
@@ -122,10 +132,10 @@ class GrizzlEApi {
             emailOrPhone: this.email,
             password: this.password,
         });
-        this.log.debug(`Login raw response: ${JSON.stringify(raw)}`);
+        this.log.debug(`Login raw response: ${JSON.stringify(redactToken(raw))}`);
         const resp = raw;
         if (!resp.token) {
-            throw new Error(`Login did not return a token. Response: ${JSON.stringify(raw)}`);
+            throw new Error(`Login did not return a token. Response: ${JSON.stringify(redactToken(raw))}`);
         }
         this.token = resp.token;
         this.tokenExpiry = parseJwtExpiry(resp.token);
